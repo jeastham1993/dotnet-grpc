@@ -7,11 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8F41691D-E89
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JEasthamDev.Grpc.Orders", "src\JEasthamDev.Grpc.Orders\JEasthamDev.Grpc.Orders.csproj", "{E7196EB4-493A-4D29-8974-AAB90E340F03}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "protos", "protos", "{B4D13FEA-F8EF-4E7C-8E89-9C151C419E0F}"
-ProjectSection(SolutionItems) = preProject
-	src\protos\order.proto = src\protos\order.proto
-EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JEasthamDev.Grpc.RestProxy", "src\JEasthamDev.Grpc.RestProxy\JEasthamDev.Grpc.RestProxy.csproj", "{EAB4027D-59F6-4533-88EE-61EA6ACD86DF}"
 EndProject
 Global
@@ -54,7 +49,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E7196EB4-493A-4D29-8974-AAB90E340F03} = {8F41691D-E898-4A29-BEEA-ACAE727B6445}
-		{B4D13FEA-F8EF-4E7C-8E89-9C151C419E0F} = {8F41691D-E898-4A29-BEEA-ACAE727B6445}
 		{EAB4027D-59F6-4533-88EE-61EA6ACD86DF} = {8F41691D-E898-4A29-BEEA-ACAE727B6445}
 	EndGlobalSection
 EndGlobal
