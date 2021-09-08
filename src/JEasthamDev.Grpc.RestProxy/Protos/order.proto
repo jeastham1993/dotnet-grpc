@@ -30,7 +30,8 @@ message ListCustomerOrdersReply {
 
 // The response message containing the greetings.
 message GetOrderReply {
-  string orderId = 1;
+  string orderId = 1 [deprecated=true];
   string customerId = 2;
   google.protobuf.Timestamp orderDate = 3;
+  string orderNumber = 4;
 }

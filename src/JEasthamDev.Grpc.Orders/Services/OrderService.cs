@@ -16,24 +16,29 @@ namespace JEasthamDev.Grpc.Orders.Services
 		/// <inheritdoc />
 		public async override Task<GetOrderReply> GetOrder(GetOrderRequest request, ServerCallContext context)
 		{
+			var orderNumber = Guid.NewGuid().ToString();
+			
 			return new GetOrderReply()
 			{
 				CustomerId = "test@test.com",
 				OrderDate = Timestamp.FromDateTime(DateTime.UtcNow),
-				OrderId = Guid.NewGuid().ToString()
+				OrderId = orderNumber,
+				OrderNumber = orderNumber
 			};
 		}
 
 		/// <inheritdoc />
 		public async override Task<ListCustomerOrdersReply> ListCustomerOrders(GetCustomerOrdersRequest request, ServerCallContext context)
 		{
+			var orderNumber = Guid.NewGuid().ToString();
 			var orders = new List<GetOrderReply>(1)
 			{
 				new GetOrderReply()
 				{
 					CustomerId = "test@test.com",
 					OrderDate = Timestamp.FromDateTime(DateTime.UtcNow),
-					OrderId = Guid.NewGuid().ToString()
+					OrderId = orderNumber,
+					OrderNumber = orderNumber
 				},
 			};
 			

@@ -32,6 +32,8 @@ namespace JEasthamDev.Grpc.RestProxy.Controllers
                 OrderId = orderId
             });
 
+            var id = order.OrderId; // Checking to see that the deprecated warning appears.
+
             return this.Ok(order);
         }
 
