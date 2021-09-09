@@ -31,7 +31,7 @@ namespace JEasthamDev.Grpc.RestProxy.Services
 				Postcode = request.Postcode
 			});
 
-			return new OrderToDtoAdapter(orders).GetDto();
+			return new OrderToDtoAdapter(orders);
 		}
 
 		public async Task<OrderDTO> GetSpecificCustomerOrder(string customerId, string orderId)
@@ -41,7 +41,7 @@ namespace JEasthamDev.Grpc.RestProxy.Services
 				OrderId = orderId
 			});
 
-			return new OrderToDtoAdapter(order).GetDto();
+			return new OrderToDtoAdapter(order);
 		}
 
 		public async Task<List<OrderDTO>> ListCustomerOrders(string customerId)
@@ -55,7 +55,7 @@ namespace JEasthamDev.Grpc.RestProxy.Services
 
 			foreach (var order in orders.Order)
 			{
-				response.Add(new OrderToDtoAdapter(order).GetDto());
+				response.Add(new OrderToDtoAdapter(order));
 			}
 
 			return response;
