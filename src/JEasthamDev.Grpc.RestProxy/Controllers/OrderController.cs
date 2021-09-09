@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Net.Client;
+using JEasthamDev.Grpc.RestProxy.Services;
 using JEasthamDev.Orders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,24 +16,18 @@ namespace JEasthamDev.Grpc.RestProxy.Controllers
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
+        private readonly OrderService             _orderService;
 
-        public OrderController(ILogger<OrderController> logger)
+        public OrderController(ILogger<OrderController> logger, OrderService orderService)
         {
             this._logger = logger;
+            this._orderService = orderService;
         }
 
         [HttpGet("{customerId}/order/{orderId}")]
         public async Task<IActionResult> GetSpecificCustomerOrder(string customerId, string orderId)
         {
-            using var channel = GrpcChannel.ForAddress("https://localhost:5001");
-            var client = new Orders.Orders.OrdersClient(channel);
-
-            var order = await client.GetOrderAsync(new GetOrderRequest()
-            {
-                OrderId = orderId
-            });
-
-            var id = order.OrderId; // Checking to see that the deprecated warning appears.
+            var order = await this._orderService.GetSpecificCustomerOrder(customerId, orderId);
 
             return this.Ok(order);
         }
@@ -40,29 +35,18 @@ namespace JEasthamDev.Grpc.RestProxy.Controllers
         [HttpPost("{customerId}")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request, string customerId)
         {
-            using var channel = GrpcChannel.ForAddress("https://localhost:5001");
-            var client = new Orders.Orders.OrdersClient(channel);
-
-            var orders = await client.CreateNewOrderAsync(new CreateOrderRequest()
-            {
-                CustomerId = customerId,
-                Postcode = request.Postcode
-            });
-
-            return this.Ok(orders);
+            request.CustomerId = customerId;
+            
+            var order = await this._orderService.CreateOrder(request);
+            
+            return this.Ok(order);
         }
 
         [HttpGet("{customerId}")]
         public async Task<IActionResult> GetCustomerOrders(string customerId)
         {
-            using var channel = GrpcChannel.ForAddress("https://localhost:5001");
-            var client = new Orders.Orders.OrdersClient(channel);
-
-            var orders = await client.ListCustomerOrdersAsync(new GetCustomerOrdersRequest()
-            {
-                CustomerId = customerId
-            });
-
+            var orders = await this._orderService.ListCustomerOrders(customerId);
+            
             return this.Ok(orders);
         }
     }
