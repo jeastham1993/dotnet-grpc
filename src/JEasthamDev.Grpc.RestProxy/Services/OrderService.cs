@@ -31,13 +31,7 @@ namespace JEasthamDev.Grpc.RestProxy.Services
 				Postcode = request.Postcode
 			});
 
-			return new OrderDTO()
-			{
-				CustomerId = orders.CustomerId,
-				OrderDate = orders.OrderDate.ToDateTime(),
-				DeliveryCharge = orders.DeliveryCharge,
-				OrderId = orders.OrderNumber
-			};
+			return new OrderToDtoAdapter(orders).GetDto();
 		}
 
 		public async Task<OrderDTO> GetSpecificCustomerOrder(string customerId, string orderId)
@@ -47,13 +41,7 @@ namespace JEasthamDev.Grpc.RestProxy.Services
 				OrderId = orderId
 			});
 
-			return new OrderDTO()
-			{
-				CustomerId = order.CustomerId,
-				OrderDate = order.OrderDate.ToDateTime(),
-				DeliveryCharge = order.DeliveryCharge,
-				OrderId = order.OrderNumber
-			};
+			return new OrderToDtoAdapter(order).GetDto();
 		}
 
 		public async Task<List<OrderDTO>> ListCustomerOrders(string customerId)
@@ -67,13 +55,7 @@ namespace JEasthamDev.Grpc.RestProxy.Services
 
 			foreach (var order in orders.Order)
 			{
-				response.Add(new OrderDTO()
-				{
-					CustomerId = order.CustomerId,
-					OrderDate = order.OrderDate.ToDateTime(),
-					DeliveryCharge = order.DeliveryCharge,
-					OrderId = order.OrderNumber
-				});
+				response.Add(new OrderToDtoAdapter(order).GetDto());
 			}
 
 			return response;
