@@ -37,6 +37,21 @@ namespace JEasthamDev.Grpc.RestProxy.Controllers
             return this.Ok(order);
         }
 
+        [HttpPost("{customerId}")]
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest request, string customerId)
+        {
+            using var channel = GrpcChannel.ForAddress("https://localhost:5001");
+            var client = new Orders.Orders.OrdersClient(channel);
+
+            var orders = await client.CreateNewOrderAsync(new CreateOrderRequest()
+            {
+                CustomerId = customerId,
+                Postcode = request.Postcode
+            });
+
+            return this.Ok(orders);
+        }
+
         [HttpGet("{customerId}")]
         public async Task<IActionResult> GetCustomerOrders(string customerId)
         {

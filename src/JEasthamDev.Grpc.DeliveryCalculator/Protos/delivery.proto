@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "JEasthamDev.Grpc.DeliveryCalculator";
+
+package delivery;
+
+service Delivery {
+  rpc Calculate (CalculateDeliveryRequest) returns (CalculateDeliveryReply);
+}
+
+message CalculateDeliveryRequest {
+  string postcode = 1;
+  float orderValue = 2;
+}
+
+message CalculateDeliveryReply {
+  float deliveryCharge = 1;
+}
